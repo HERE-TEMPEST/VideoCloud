@@ -2,6 +2,8 @@
 import { Router } from 'express';
 import { check } from 'express-validator';
 
+import { tokenVerify } from '../middleWare';
+
 import { AuthController } from './controllers/authConroller';
 
 export const routerAuth: Router = Router();
@@ -24,6 +26,7 @@ routerAuth.post(
 );
 routerAuth.post('/logout', AuthController.logout);
 routerAuth.get('/refresh', AuthController.refresh);
+routerAuth.get('/all', tokenVerify, AuthController.getAllUsers);
 
 routerAuth.use((error, req, res, next) => {
   const status = error.status || 500;

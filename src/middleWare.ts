@@ -2,6 +2,7 @@ import { Response } from 'express';
 import multer from 'multer';
 import path from 'path/posix';
 
+import { MyError } from './Error';
 import { CustomRequest } from './interfaces';
 import { tokenDB } from './User/DB/tokenDB';
 
@@ -9,12 +10,12 @@ export function tokenVerify(req: CustomRequest, res: Response, next) {
   const [, token] = req.headers.authorization.split(' ');
 
   if (!token) {
-    return res.status(403).json('user not registred');
+    return next(new MyError('user not registred', 401));
   }
   const payload = tokenDB.validateAccessToken(token);
 
   if (!payload) {
-    return res.status(400).json({ message: "this token isn't valid" });
+    return next(new MyError("this token isn't valid", 401));
   }
   req.user = { userId: payload.userId };
 

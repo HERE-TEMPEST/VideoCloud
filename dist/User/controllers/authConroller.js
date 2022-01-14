@@ -41,9 +41,28 @@ var serviceUser_1 = require("../service/serviceUser");
 var UserController = /** @class */ (function () {
     function UserController() {
     }
+    UserController.prototype.getAllUsers = function (req, res, next) {
+        return __awaiter(this, void 0, void 0, function () {
+            var users, error_1;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 2, , 3]);
+                        return [4 /*yield*/, serviceUser_1.serviceUser.getAllUsers()];
+                    case 1:
+                        users = _a.sent();
+                        return [2 /*return*/, res.status(200).json(users)];
+                    case 2:
+                        error_1 = _a.sent();
+                        return [2 /*return*/, next(error_1)];
+                    case 3: return [2 /*return*/];
+                }
+            });
+        });
+    };
     UserController.prototype.login = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
-            var errors, _a, email, password, user, error_1;
+            var errors, _a, email, password, user, error_2;
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
@@ -62,8 +81,8 @@ var UserController = /** @class */ (function () {
                         });
                         return [2 /*return*/, res.status(200).json(user.accessToken)];
                     case 2:
-                        error_1 = _b.sent();
-                        return [2 /*return*/, next(error_1)];
+                        error_2 = _b.sent();
+                        return [2 /*return*/, next(error_2)];
                     case 3: return [2 /*return*/];
                 }
             });
@@ -71,7 +90,7 @@ var UserController = /** @class */ (function () {
     };
     UserController.prototype.logout = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
-            var refreshToken, payload, error_2;
+            var refreshToken, payload, error_3;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -83,8 +102,8 @@ var UserController = /** @class */ (function () {
                         res.clearCookie('refreshToken');
                         return [2 /*return*/, res.status(200).json(payload)];
                     case 2:
-                        error_2 = _a.sent();
-                        return [2 /*return*/, next(error_2)];
+                        error_3 = _a.sent();
+                        return [2 /*return*/, next(error_3)];
                     case 3: return [2 /*return*/];
                 }
             });
@@ -92,7 +111,7 @@ var UserController = /** @class */ (function () {
     };
     UserController.prototype.refresh = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
-            var refreshToken, user, error_3;
+            var refreshToken, user, error_4;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -108,8 +127,8 @@ var UserController = /** @class */ (function () {
                         });
                         return [2 /*return*/, res.status(200).json(user.accessToken)];
                     case 2:
-                        error_3 = _a.sent();
-                        return [2 /*return*/, next(error_3)];
+                        error_4 = _a.sent();
+                        return [2 /*return*/, next(error_4)];
                     case 3: return [2 /*return*/];
                 }
             });
@@ -117,7 +136,7 @@ var UserController = /** @class */ (function () {
     };
     UserController.prototype.registration = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
-            var errors, _a, email, password, user, error_4;
+            var errors, _a, email, password, user, error_5;
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
@@ -136,8 +155,8 @@ var UserController = /** @class */ (function () {
                         });
                         return [2 /*return*/, res.status(200).json(user)];
                     case 2:
-                        error_4 = _b.sent();
-                        return [2 /*return*/, next(error_4)];
+                        error_5 = _b.sent();
+                        return [2 /*return*/, next(error_5)];
                     case 3: return [2 /*return*/];
                 }
             });

@@ -43,6 +43,25 @@ var userDB_1 = require("../DB/userDB");
 var UserService = /** @class */ (function () {
     function UserService() {
     }
+    UserService.prototype.getAllUsers = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var users, usersId;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, userDB_1.userDB.getAllUsers()];
+                    case 1:
+                        users = _a.sent();
+                        usersId = users.map(function (element) {
+                            return {
+                                email: element.email,
+                                userId: element.id,
+                            };
+                        });
+                        return [2 /*return*/, usersId];
+                }
+            });
+        });
+    };
     UserService.prototype.login = function (email, password) {
         return __awaiter(this, void 0, void 0, function () {
             var isUser, isPassewCompare, tokens;

@@ -5,15 +5,16 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var multer_1 = __importDefault(require("multer"));
 var posix_1 = __importDefault(require("path/posix"));
+var Error_1 = require("./Error");
 var tokenDB_1 = require("./User/DB/tokenDB");
 function tokenVerify(req, res, next) {
     var _a = req.headers.authorization.split(' '), token = _a[1];
     if (!token) {
-        return res.status(403).json('user not registred');
+        return next(new Error_1.MyError('user not registred', 401));
     }
     var payload = tokenDB_1.tokenDB.validateAccessToken(token);
     if (!payload) {
-        return res.status(400).json({ message: "this token isn't valid" });
+        return next(new Error_1.MyError("this token isn't valid", 401));
     }
     req.user = { userId: payload.userId };
     next();

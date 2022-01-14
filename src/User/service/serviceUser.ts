@@ -1,10 +1,24 @@
 import { compare, hash } from 'bcrypt';
+import { Types } from 'mongoose';
 
 import { MyError } from '../../Error';
 import { tokenDB } from '../DB/tokenDB';
 import { userDB } from '../DB/userDB';
 
 class UserService {
+  async getAllUsers(): Promise<any> {
+    const users = await userDB.getAllUsers();
+
+    const usersId = users.map((element) => {
+      return {
+        email: element.email,
+        userId: element.id,
+      };
+    });
+
+    return usersId;
+  }
+
   async login(email: string, password: string) {
     const isUser = await userDB.getUser(email);
 

@@ -1,9 +1,20 @@
 import { Response, Request } from 'express';
 import { validationResult } from 'express-validator';
 
+import { CustomRequest } from '../../interfaces';
 import { serviceUser } from '../service/serviceUser';
 
 class UserController {
+  async getAllUsers(req: CustomRequest, res: Response, next) {
+    try {
+      const users = await serviceUser.getAllUsers();
+
+      return res.status(200).json(users);
+    } catch (error) {
+      return next(error);
+    }
+  }
+
   async login(req: Request, res: Response, next) {
     try {
       const errors = validationResult(req);
