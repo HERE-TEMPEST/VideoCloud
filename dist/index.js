@@ -50,6 +50,12 @@ var routeAuth_1 = require("./User/routeAuth");
 var routeVideo_1 = require("./Video/routeVideo");
 var app = express_1.default();
 dotenv_1.config();
+exports.secretValue = {
+    DB_URL: process.env.DB_URL,
+    PORT: parseInt(process.env.PORT),
+    SECRET_KEY_ACCESS: process.env.SECRET_KEY_ACCESS,
+    SECRET_KEY_REFRESH: process.env.SECRET_KEY_REFRESH,
+};
 app.use(express_1.default.json());
 app.use(cors_1.default());
 app.use(cookie_parser_1.default());

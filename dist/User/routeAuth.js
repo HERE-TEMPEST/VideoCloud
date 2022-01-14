@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+/* eslint-disable @typescript-eslint/no-unused-vars */
 var express_1 = require("express");
 var express_validator_1 = require("express-validator");
 var authConroller_1 = require("./controllers/authConroller");
@@ -14,3 +15,12 @@ exports.routerAuth.post('/login', [
 ], authConroller_1.AuthController.login);
 exports.routerAuth.post('/logout', authConroller_1.AuthController.logout);
 exports.routerAuth.get('/refresh', authConroller_1.AuthController.refresh);
+exports.routerAuth.use(function (error, req, res, next) {
+    var status = error.status || 500;
+    var message = error.message;
+    res.status(status);
+    res.json({
+        message: message,
+        status: status,
+    });
+});

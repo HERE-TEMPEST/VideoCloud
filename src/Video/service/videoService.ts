@@ -5,7 +5,7 @@ import { extname } from 'path/posix';
 
 import { MyError } from '../../Error';
 import { shareDB } from '../../Share/DB/shareDB';
-import { ServiceUser } from '../../User/service/serviceUser';
+import { userDB } from '../../User/DB/userDB';
 import { InVideo, OutVideo } from '../DB/interfaces';
 import { videoDB } from '../DB/videoDB';
 
@@ -69,14 +69,18 @@ class VideoService {
       throw new MyError('video exist in user', 404);
     }
 
-    let users: Array<Types.ObjectId> = await ServiceUser.getAllUsers();
+    const users = await userDB.getAllUsers();
 
     // users
-    users = users.filter((element) => {
-      return element != userId;
-    });
+    const usersId: Array<Types.ObjectId> = users.reduce((prev, element) => {
+      if (!element.id.equals(userId)) {
+        prev.push(element.id);
+      }
 
-    const newShare = await shareDB.addShare(userId, newVideo.videoId, users);
+      return prev;
+    }, Array<Types.ObjectId>());
+
+    const newShare = await shareDB.addShare(userId, newVideo.videoId, usersId);
 
     if (!newShare) {
       await videoDB.delVideo(newVideo.userId, newVideo.videoId);

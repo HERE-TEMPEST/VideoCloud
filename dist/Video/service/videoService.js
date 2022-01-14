@@ -43,7 +43,7 @@ var fs_1 = __importDefault(require("fs"));
 var posix_1 = require("path/posix");
 var Error_1 = require("../../Error");
 var shareDB_1 = require("../../Share/DB/shareDB");
-var serviceUser_1 = require("../../User/service/serviceUser");
+var userDB_1 = require("../../User/DB/userDB");
 var videoDB_1 = require("../DB/videoDB");
 var VideoService = /** @class */ (function () {
     function VideoService() {
@@ -106,7 +106,7 @@ var VideoService = /** @class */ (function () {
     };
     VideoService.prototype.upload = function (userId, file) {
         return __awaiter(this, void 0, void 0, function () {
-            var inData, newVideo, users, newShare;
+            var inData, newVideo, users, usersId, newShare;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -122,14 +122,16 @@ var VideoService = /** @class */ (function () {
                         if (!newVideo) {
                             throw new Error_1.MyError('video exist in user', 404);
                         }
-                        return [4 /*yield*/, serviceUser_1.ServiceUser.getAllUsers()];
+                        return [4 /*yield*/, userDB_1.userDB.getAllUsers()];
                     case 2:
                         users = _a.sent();
-                        // users
-                        users = users.filter(function (element) {
-                            return element != userId;
-                        });
-                        return [4 /*yield*/, shareDB_1.shareDB.addShare(userId, newVideo.videoId, users)];
+                        usersId = users.reduce(function (prev, element) {
+                            if (!element.id.equals(userId)) {
+                                prev.push(element.id);
+                            }
+                            return prev;
+                        }, Array());
+                        return [4 /*yield*/, shareDB_1.shareDB.addShare(userId, newVideo.videoId, usersId)];
                     case 3:
                         newShare = _a.sent();
                         if (!!newShare) return [3 /*break*/, 5];

@@ -3,7 +3,7 @@ import multer from 'multer';
 import path from 'path/posix';
 
 import { CustomRequest } from './interfaces';
-import { ServiceToken } from './User/service/serviceToken';
+import { tokenDB } from './User/DB/tokenDB';
 
 export function tokenVerify(req: CustomRequest, res: Response, next) {
   const [, token] = req.headers.authorization.split(' ');
@@ -11,7 +11,7 @@ export function tokenVerify(req: CustomRequest, res: Response, next) {
   if (!token) {
     return res.status(403).json('user not registred');
   }
-  const payload = ServiceToken.validateAccessToken(token);
+  const payload = tokenDB.validateAccessToken(token);
 
   if (!payload) {
     return res.status(400).json({ message: "this token isn't valid" });

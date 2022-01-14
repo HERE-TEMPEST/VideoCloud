@@ -4,6 +4,7 @@ import { config } from 'dotenv';
 import express from 'express';
 import mongoose from 'mongoose';
 
+import { SecretValue } from './interfaces';
 import { tokenVerify } from './middleWare';
 import { routeShare } from './Share/routeShare';
 import { routerAuth } from './User/routeAuth';
@@ -12,6 +13,13 @@ import { routeVideo } from './Video/routeVideo';
 const app = express();
 
 config();
+
+export const secretValue: SecretValue = {
+  DB_URL: process.env.DB_URL,
+  PORT: parseInt(process.env.PORT),
+  SECRET_KEY_ACCESS: process.env.SECRET_KEY_ACCESS,
+  SECRET_KEY_REFRESH: process.env.SECRET_KEY_REFRESH,
+};
 
 app.use(express.json());
 app.use(cors());

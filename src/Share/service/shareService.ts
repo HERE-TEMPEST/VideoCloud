@@ -1,7 +1,7 @@
 import { Types } from 'mongoose';
 
 import { MyError } from '../../Error';
-import { ServiceUser } from '../../User/service/serviceUser';
+import { userDB } from '../../User/DB/userDB';
 import { shareDB } from '../DB/shareDB';
 //import { videoDB } from '../../Video/DB/videoDB';
 
@@ -17,13 +17,17 @@ class ShareService {
   }
 
   async accessAll(userId: Types.ObjectId, videoId: Types.ObjectId) {
-    let users = await ServiceUser.getAllUsers();
+    const users = await userDB.getAllUsers();
 
-    users = users.filter((element) => {
-      return element != userId;
-    });
+    const usersId: Array<Types.ObjectId> = users.reduce((prev, element) => {
+      if (!element.id.equals(userId)) {
+        prev.push(element.id);
+      }
 
-    const share = await shareDB.addAccess(users, videoId);
+      return prev;
+    }, Array<Types.ObjectId>());
+
+    const share = await shareDB.addAccess(usersId, videoId);
 
     if (!share) {
       throw new MyError('video not found', 404);
@@ -43,13 +47,17 @@ class ShareService {
   }
 
   async banAll(userId: Types.ObjectId, videoId: Types.ObjectId) {
-    let users = await ServiceUser.getAllUsers();
+    const users = await userDB.getAllUsers();
 
-    users = users.filter((element) => {
-      return element != userId;
-    });
+    const usersId: Array<Types.ObjectId> = users.reduce((prev, element) => {
+      if (!element.id.equals(userId)) {
+        prev.push(element.id);
+      }
 
-    const share = await shareDB.addBan(users, videoId);
+      return prev;
+    }, Array<Types.ObjectId>());
+
+    const share = await shareDB.addBan(usersId, videoId);
 
     return share;
   }

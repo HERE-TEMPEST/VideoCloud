@@ -36,92 +36,79 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var Error_1 = require("../../Error");
-var userDB_1 = require("../../User/DB/userDB");
-var shareDB_1 = require("../DB/shareDB");
-//import { videoDB } from '../../Video/DB/videoDB';
-var ShareService = /** @class */ (function () {
-    function ShareService() {
+var user_model_1 = require("../models/user-model");
+var UserDB = /** @class */ (function () {
+    function UserDB() {
     }
-    ShareService.prototype.access = function (usersId, videoId) {
+    UserDB.prototype.addUser = function (email, password) {
         return __awaiter(this, void 0, void 0, function () {
-            var share;
+            var user, error_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, shareDB_1.shareDB.addAccess(usersId, videoId)];
+                    case 0:
+                        _a.trys.push([0, 2, , 3]);
+                        return [4 /*yield*/, user_model_1.UserModel.create({ email: email, password: password })];
                     case 1:
-                        share = _a.sent();
-                        if (!share) {
-                            throw new Error_1.MyError('video not found', 404);
-                        }
-                        return [2 /*return*/, share];
+                        user = _a.sent();
+                        return [2 /*return*/, {
+                                email: user.email,
+                                id: user._id,
+                                password: user.password,
+                            }];
+                    case 2:
+                        error_1 = _a.sent();
+                        return [2 /*return*/, null];
+                    case 3: return [2 /*return*/];
                 }
             });
         });
     };
-    ShareService.prototype.accessAll = function (userId, videoId) {
+    UserDB.prototype.getAllUsers = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var users, usersId, share;
+            var users, outUsers, error_2;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, userDB_1.userDB.getAllUsers()];
+                    case 0:
+                        _a.trys.push([0, 2, , 3]);
+                        return [4 /*yield*/, user_model_1.UserModel.find()];
                     case 1:
                         users = _a.sent();
-                        usersId = users.reduce(function (prev, element) {
-                            if (!element.id.equals(userId)) {
-                                prev.push(element.id);
-                            }
-                            return prev;
-                        }, Array());
-                        return [4 /*yield*/, shareDB_1.shareDB.addAccess(usersId, videoId)];
-                    case 2:
-                        share = _a.sent();
-                        if (!share) {
-                            throw new Error_1.MyError('video not found', 404);
+                        if (!users) {
+                            return [2 /*return*/, null];
                         }
-                        return [2 /*return*/, share];
+                        outUsers = users.map(function (value) {
+                            return {
+                                email: value.email,
+                                id: value._id,
+                                password: value.password,
+                            };
+                        });
+                        return [2 /*return*/, outUsers];
+                    case 2:
+                        error_2 = _a.sent();
+                        return [2 /*return*/, null];
+                    case 3: return [2 /*return*/];
                 }
             });
         });
     };
-    ShareService.prototype.ban = function (usersId, videoId) {
+    UserDB.prototype.getUser = function (email) {
         return __awaiter(this, void 0, void 0, function () {
-            var share;
+            var user;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, shareDB_1.shareDB.addBan(usersId, videoId)];
+                    case 0: return [4 /*yield*/, user_model_1.UserModel.findOne({ email: email })];
                     case 1:
-                        share = _a.sent();
-                        if (!share) {
-                            throw new Error_1.MyError('video not found', 404);
-                        }
-                        return [2 /*return*/, share];
+                        user = _a.sent();
+                        return [2 /*return*/, {
+                                email: user.email,
+                                id: user._id,
+                                password: user.password,
+                            }];
                 }
             });
         });
     };
-    ShareService.prototype.banAll = function (userId, videoId) {
-        return __awaiter(this, void 0, void 0, function () {
-            var users, usersId, share;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4 /*yield*/, userDB_1.userDB.getAllUsers()];
-                    case 1:
-                        users = _a.sent();
-                        usersId = users.reduce(function (prev, element) {
-                            if (!element.id.equals(userId)) {
-                                prev.push(element.id);
-                            }
-                            return prev;
-                        }, Array());
-                        return [4 /*yield*/, shareDB_1.shareDB.addBan(usersId, videoId)];
-                    case 2:
-                        share = _a.sent();
-                        return [2 /*return*/, share];
-                }
-            });
-        });
-    };
-    return ShareService;
+    return UserDB;
 }());
-exports.shareService = new ShareService();
+exports.userDB = new UserDB();

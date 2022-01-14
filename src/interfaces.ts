@@ -10,3 +10,10 @@ export interface CustomRequest extends Request {
 export interface JwtPayLoad {
   userId: Types.ObjectId;
 }
+
+export interface SecretValue {
+  DB_URL: string;
+  PORT: number;
+  SECRET_KEY_ACCESS: string;
+  SECRET_KEY_REFRESH: string;
+}

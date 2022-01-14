@@ -9,3 +9,9 @@ export interface Tokens {
   accessToken: string;
   refreshToken: string;
 }
+
+export interface OutUser {
+  email: string;
+  id: Types.ObjectId;
+  password: string;
+}

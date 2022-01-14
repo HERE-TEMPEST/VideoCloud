@@ -1,28 +1,12 @@
 import { compare, hash } from 'bcrypt';
 
 import { MyError } from '../../Error';
-import { UserModel } from '../models/user-model';
-import { ServiceToken } from '../service/serviceToken';
+import { tokenDB } from '../DB/tokenDB';
+import { userDB } from '../DB/userDB';
 
 class UserService {
-  async getAllUsers() {
-    const users = await UserModel.find();
-
-    const usersId = users.map((value: any) => {
-      return value._id;
-    });
-
-    return usersId;
-  }
-
-  async getUser(email: string) {
-    const user = await UserModel.findOne({ email });
-
-    return user;
-  }
-
-  async login(email, password) {
-    const isUser = await UserModel.findOne({ email });
+  async login(email: string, password: string) {
+    const isUser = await userDB.getUser(email);
 
     if (!isUser) {
       throw new MyError('login or password uncorrectly', 401);
@@ -32,54 +16,58 @@ class UserService {
     if (!isPassewCompare) {
       throw new MyError('login or password uncorrectly', 401);
     }
-    const tokens = ServiceToken.generateToken({ userId: isUser._id });
+    const tokens = tokenDB.generateToken({ userId: isUser.id });
 
-    await ServiceToken.saveToken(isUser._id, tokens.refreshToken);
+    await tokenDB.saveToken(isUser.id, tokens.refreshToken);
 
     return tokens;
   }
 
-  async logout(refreshToken) {
-    const payload = await ServiceToken.removeToken(refreshToken);
+  async logout(refreshToken: string) {
+    const payload = await tokenDB.removeToken(refreshToken);
+
+    if (!payload) {
+      throw new MyError('refreshToken is not verify', 401);
+    }
 
     return payload;
   }
 
-  async refresh(refreshToken) {
+  async refresh(refreshToken: string) {
     if (!refreshToken) {
-      throw { message: 'refreshToken is undefined' };
+      throw new MyError('this refreshToken is undefined...', 401);
     }
-    const payload = ServiceToken.validateRefreshToken(refreshToken);
+    const payload = tokenDB.validateRefreshToken(refreshToken);
 
-    const existInDB = await ServiceToken.existRefreshToken(refreshToken);
+    const existInDB = await tokenDB.existRefreshToken(refreshToken);
 
     if (!existInDB || !payload) {
-      throw { message: 'refreshToken is not verify' };
+      throw new MyError('refreshToken is not verify', 401);
     }
 
-    const tokens = ServiceToken.generateToken({ userId: payload.userId });
+    const tokens = tokenDB.generateToken({ userId: payload.userId });
 
-    await ServiceToken.saveToken(payload.userId, tokens.refreshToken);
+    await tokenDB.saveToken(payload.userId, tokens.refreshToken);
 
     return tokens;
   }
 
-  async registration(email, password) {
-    const isUser = await UserModel.findOne({ email });
+  async registration(email: string, password: string) {
+    const isUser = await userDB.getUser(email);
 
     if (isUser) {
-      throw { message: 'this user exist in system...' };
+      throw new MyError('this user exist in system...', 401);
     }
     const hashPassword = await hash(password, 3);
 
-    const newUser = await UserModel.create({ email, password: hashPassword });
+    const newUser = await userDB.addUser(email, hashPassword);
 
-    const tokens = ServiceToken.generateToken({ userId: newUser._id });
+    const tokens = tokenDB.generateToken({ userId: newUser.id });
 
-    await ServiceToken.saveToken(newUser._id, tokens.refreshToken);
+    await tokenDB.saveToken(newUser.id, tokens.refreshToken);
 
     return tokens;
   }
 }
 
-export const ServiceUser = new UserService();
+export const serviceUser = new UserService();

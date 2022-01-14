@@ -41,100 +41,105 @@ var serviceUser_1 = require("../service/serviceUser");
 var UserController = /** @class */ (function () {
     function UserController() {
     }
-    UserController.prototype.login = function (req, res) {
+    UserController.prototype.login = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
-            var _a, email, password;
+            var errors, _a, email, password, user, error_1;
             return __generator(this, function (_b) {
-                try {
-                    _a = req.body, email = _a.email, password = _a.password;
-                    serviceUser_1.ServiceUser.login(email, password)
-                        .then(function (body) {
-                        res.cookie('refreshToken', body.refreshToken, { httpOnly: true, maxAge: 30 * 24 * 60 * 60 * 1000 });
-                        return res.status(200).json(body.accessToken);
-                    })
-                        .catch(function (body) {
-                        res.status(500).json(body);
-                    });
-                }
-                catch (error) {
-                    console.log('error', error);
-                    res.status(500).json(error);
-                }
-                return [2 /*return*/];
-            });
-        });
-    };
-    UserController.prototype.logout = function (req, res) {
-        return __awaiter(this, void 0, void 0, function () {
-            var refreshToken, payload, error_1;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
+                switch (_b.label) {
                     case 0:
-                        _a.trys.push([0, 2, , 3]);
-                        refreshToken = req.cookies.refreshToken;
-                        return [4 /*yield*/, serviceUser_1.ServiceUser.logout(refreshToken)];
+                        _b.trys.push([0, 2, , 3]);
+                        errors = express_validator_1.validationResult(req);
+                        if (!errors.isEmpty()) {
+                            throw errors;
+                        }
+                        _a = req.body, email = _a.email, password = _a.password;
+                        return [4 /*yield*/, serviceUser_1.serviceUser.login(email, password)];
                     case 1:
-                        payload = _a.sent();
-                        res.clearCookie('refreshToken');
-                        return [2 /*return*/, res.status(200).json(payload)];
+                        user = _b.sent();
+                        res.cookie('refreshToken', user.refreshToken, {
+                            httpOnly: true,
+                            maxAge: 30 * 24 * 60 * 60 * 1000,
+                        });
+                        return [2 /*return*/, res.status(200).json(user.accessToken)];
                     case 2:
-                        error_1 = _a.sent();
-                        console.log('error', error_1);
-                        res.status(500).json(error_1);
-                        return [3 /*break*/, 3];
+                        error_1 = _b.sent();
+                        return [2 /*return*/, next(error_1)];
                     case 3: return [2 /*return*/];
                 }
             });
         });
     };
-    UserController.prototype.refresh = function (req, res) {
+    UserController.prototype.logout = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
-            var refreshToken;
+            var refreshToken, payload, error_2;
             return __generator(this, function (_a) {
-                try {
-                    refreshToken = req.cookies.refreshToken;
-                    res.clearCookie('refreshToken');
-                    serviceUser_1.ServiceUser.refresh(refreshToken)
-                        .then(function (body) {
-                        res.cookie('refreshToken', body.refreshToken, { httpOnly: true, maxAge: 30 * 24 * 60 * 60 * 1000 });
-                        res.status(200).json(body.accessToken);
-                    })
-                        .catch(function (body) {
-                        res.status(500).json(body);
-                    });
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 2, , 3]);
+                        refreshToken = req.cookies.refreshToken;
+                        return [4 /*yield*/, serviceUser_1.serviceUser.logout(refreshToken)];
+                    case 1:
+                        payload = _a.sent();
+                        res.clearCookie('refreshToken');
+                        return [2 /*return*/, res.status(200).json(payload)];
+                    case 2:
+                        error_2 = _a.sent();
+                        return [2 /*return*/, next(error_2)];
+                    case 3: return [2 /*return*/];
                 }
-                catch (error) {
-                    console.log('error', error);
-                    res.status(500).json(error);
-                }
-                return [2 /*return*/];
             });
         });
     };
-    UserController.prototype.registration = function (req, res) {
+    UserController.prototype.refresh = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
-            var errors, _a, email, password;
+            var refreshToken, user, error_3;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 2, , 3]);
+                        refreshToken = req.cookies.refreshToken;
+                        res.clearCookie('refreshToken');
+                        return [4 /*yield*/, serviceUser_1.serviceUser.refresh(refreshToken)];
+                    case 1:
+                        user = _a.sent();
+                        res.cookie('refreshToken', user.refreshToken, {
+                            httpOnly: true,
+                            maxAge: 30 * 24 * 60 * 60 * 1000,
+                        });
+                        return [2 /*return*/, res.status(200).json(user.accessToken)];
+                    case 2:
+                        error_3 = _a.sent();
+                        return [2 /*return*/, next(error_3)];
+                    case 3: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    UserController.prototype.registration = function (req, res, next) {
+        return __awaiter(this, void 0, void 0, function () {
+            var errors, _a, email, password, user, error_4;
             return __generator(this, function (_b) {
-                try {
-                    errors = express_validator_1.validationResult(req);
-                    if (!errors.isEmpty()) {
-                        throw { errors: errors };
-                    }
-                    _a = req.body, email = _a.email, password = _a.password;
-                    serviceUser_1.ServiceUser.registration(email, password)
-                        .then(function (body) {
-                        res.cookie('refreshToken', body.refreshToken, { httpOnly: true, maxAge: 30 * 24 * 60 * 60 * 1000 });
-                        return res.status(200).json(body);
-                    })
-                        .catch(function (body) {
-                        res.status(500).json(body);
-                    });
+                switch (_b.label) {
+                    case 0:
+                        _b.trys.push([0, 2, , 3]);
+                        errors = express_validator_1.validationResult(req);
+                        if (!errors.isEmpty()) {
+                            throw errors;
+                        }
+                        _a = req.body, email = _a.email, password = _a.password;
+                        return [4 /*yield*/, serviceUser_1.serviceUser.registration(email, password)];
+                    case 1:
+                        user = _b.sent();
+                        res.cookie('refreshToken', user.refreshToken, {
+                            httpOnly: true,
+                            maxAge: 30 * 24 * 60 * 60 * 1000,
+                        });
+                        return [2 /*return*/, res.status(200).json(user)];
+                    case 2:
+                        error_4 = _b.sent();
+                        return [2 /*return*/, next(error_4)];
+                    case 3: return [2 /*return*/];
                 }
-                catch (error) {
-                    console.log('error', error);
-                    return [2 /*return*/, res.status(500).json(error)];
-                }
-                return [2 /*return*/];
             });
         });
     };

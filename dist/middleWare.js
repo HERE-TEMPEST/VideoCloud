@@ -5,13 +5,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var multer_1 = __importDefault(require("multer"));
 var posix_1 = __importDefault(require("path/posix"));
-var serviceToken_1 = require("./User/service/serviceToken");
+var tokenDB_1 = require("./User/DB/tokenDB");
 function tokenVerify(req, res, next) {
     var _a = req.headers.authorization.split(' '), token = _a[1];
     if (!token) {
         return res.status(403).json('user not registred');
     }
-    var payload = serviceToken_1.ServiceToken.validateAccessToken(token);
+    var payload = tokenDB_1.tokenDB.validateAccessToken(token);
     if (!payload) {
         return res.status(400).json({ message: "this token isn't valid" });
     }

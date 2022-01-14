@@ -1,14 +1,14 @@
 import { sign, verify } from 'jsonwebtoken';
 import { Types } from 'mongoose';
 
-import { SECRET_KEY_ACCESS, SECRET_KEY_REFRESH } from '../../config';
+import { secretValue } from '../../index';
 import { JwtPayLoad } from '../../interfaces';
 import { TokenModel } from '../models/token-model';
 
 import { OutToken, Tokens } from './interfaces';
 
 class TokenDB {
-  async existRefreshToken(refreshToken): Promise<OutToken> {
+  async existRefreshToken(refreshToken: string): Promise<OutToken> {
     try {
       const isToken = await TokenModel.findOne({ refreshToken });
 
@@ -27,8 +27,8 @@ class TokenDB {
 
   generateToken(payload: JwtPayLoad): Tokens {
     try {
-      const accessToken = sign(payload, SECRET_KEY_ACCESS, { expiresIn: '180m' });
-      const refreshToken = sign(payload, SECRET_KEY_REFRESH, { expiresIn: '30d' });
+      const accessToken = sign(payload, secretValue.SECRET_KEY_ACCESS, { expiresIn: '180m' });
+      const refreshToken = sign(payload, secretValue.SECRET_KEY_REFRESH, { expiresIn: '30d' });
 
       return {
         accessToken,
@@ -39,7 +39,7 @@ class TokenDB {
     }
   }
 
-  async removeToken(refreshToken): Promise<OutToken> {
+  async removeToken(refreshToken: string): Promise<OutToken> {
     try {
       const payload = await TokenModel.findOneAndDelete({ refreshToken });
 
@@ -78,9 +78,9 @@ class TokenDB {
     }
   }
 
-  validateAccessToken(accessToken): JwtPayLoad {
+  validateAccessToken(accessToken: string): JwtPayLoad {
     try {
-      const payload = verify(accessToken, SECRET_KEY_ACCESS) as JwtPayLoad;
+      const payload = verify(accessToken, secretValue.SECRET_KEY_ACCESS) as JwtPayLoad;
 
       return payload;
     } catch (error) {
@@ -88,9 +88,9 @@ class TokenDB {
     }
   }
 
-  validateRefreshToken(refreshToken): JwtPayLoad {
+  validateRefreshToken(refreshToken: string): JwtPayLoad {
     try {
-      const payload = verify(refreshToken, SECRET_KEY_REFRESH) as JwtPayLoad;
+      const payload = verify(refreshToken, secretValue.SECRET_KEY_REFRESH) as JwtPayLoad;
 
       return payload;
     } catch (error) {

@@ -37,59 +37,31 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var bcrypt_1 = require("bcrypt");
-var user_model_1 = require("../models/user-model");
-var serviceToken_1 = require("../service/serviceToken");
+var Error_1 = require("../../Error");
+var tokenDB_1 = require("../DB/tokenDB");
+var userDB_1 = require("../DB/userDB");
 var UserService = /** @class */ (function () {
     function UserService() {
     }
-    UserService.prototype.getAllUsers = function () {
-        return __awaiter(this, void 0, void 0, function () {
-            var users, usersId;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4 /*yield*/, user_model_1.UserModel.find()];
-                    case 1:
-                        users = _a.sent();
-                        usersId = users.map(function (value) {
-                            return value._id;
-                        });
-                        return [2 /*return*/, usersId];
-                }
-            });
-        });
-    };
-    UserService.prototype.getUser = function (email) {
-        return __awaiter(this, void 0, void 0, function () {
-            var user;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4 /*yield*/, user_model_1.UserModel.findOne({ email: email })];
-                    case 1:
-                        user = _a.sent();
-                        return [2 /*return*/, user];
-                }
-            });
-        });
-    };
     UserService.prototype.login = function (email, password) {
         return __awaiter(this, void 0, void 0, function () {
             var isUser, isPassewCompare, tokens;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, user_model_1.UserModel.findOne({ email: email })];
+                    case 0: return [4 /*yield*/, userDB_1.userDB.getUser(email)];
                     case 1:
                         isUser = _a.sent();
                         if (!isUser) {
-                            throw { message: 'login or password uncorrectly' };
+                            throw new Error_1.MyError('login or password uncorrectly', 401);
                         }
                         return [4 /*yield*/, bcrypt_1.compare(password, isUser.password)];
                     case 2:
                         isPassewCompare = _a.sent();
                         if (!isPassewCompare) {
-                            throw { message: 'login or password uncorrectly' };
+                            throw new Error_1.MyError('login or password uncorrectly', 401);
                         }
-                        tokens = serviceToken_1.ServiceToken.generateToken({ userId: isUser._id });
-                        return [4 /*yield*/, serviceToken_1.ServiceToken.saveToken(isUser._id, tokens.refreshToken)];
+                        tokens = tokenDB_1.tokenDB.generateToken({ userId: isUser.id });
+                        return [4 /*yield*/, tokenDB_1.tokenDB.saveToken(isUser.id, tokens.refreshToken)];
                     case 3:
                         _a.sent();
                         return [2 /*return*/, tokens];
@@ -102,9 +74,12 @@ var UserService = /** @class */ (function () {
             var payload;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, serviceToken_1.ServiceToken.removeToken(refreshToken)];
+                    case 0: return [4 /*yield*/, tokenDB_1.tokenDB.removeToken(refreshToken)];
                     case 1:
                         payload = _a.sent();
+                        if (!payload) {
+                            throw new Error_1.MyError('refreshToken is not verify', 401);
+                        }
                         return [2 /*return*/, payload];
                 }
             });
@@ -117,17 +92,17 @@ var UserService = /** @class */ (function () {
                 switch (_a.label) {
                     case 0:
                         if (!refreshToken) {
-                            throw { message: 'refreshToken is undefined' };
+                            throw new Error_1.MyError('this refreshToken is undefined...', 401);
                         }
-                        payload = serviceToken_1.ServiceToken.validateRefreshToken(refreshToken);
-                        return [4 /*yield*/, serviceToken_1.ServiceToken.existRefreshToken(refreshToken)];
+                        payload = tokenDB_1.tokenDB.validateRefreshToken(refreshToken);
+                        return [4 /*yield*/, tokenDB_1.tokenDB.existRefreshToken(refreshToken)];
                     case 1:
                         existInDB = _a.sent();
                         if (!existInDB || !payload) {
-                            throw { message: 'refreshToken is not verify' };
+                            throw new Error_1.MyError('refreshToken is not verify', 401);
                         }
-                        tokens = serviceToken_1.ServiceToken.generateToken({ userId: payload.userId });
-                        return [4 /*yield*/, serviceToken_1.ServiceToken.saveToken(payload.userId, tokens.refreshToken)];
+                        tokens = tokenDB_1.tokenDB.generateToken({ userId: payload.userId });
+                        return [4 /*yield*/, tokenDB_1.tokenDB.saveToken(payload.userId, tokens.refreshToken)];
                     case 2:
                         _a.sent();
                         return [2 /*return*/, tokens];
@@ -140,20 +115,20 @@ var UserService = /** @class */ (function () {
             var isUser, hashPassword, newUser, tokens;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, user_model_1.UserModel.findOne({ email: email })];
+                    case 0: return [4 /*yield*/, userDB_1.userDB.getUser(email)];
                     case 1:
                         isUser = _a.sent();
                         if (isUser) {
-                            throw { message: 'this user exist in system...' };
+                            throw new Error_1.MyError('this user exist in system...', 401);
                         }
                         return [4 /*yield*/, bcrypt_1.hash(password, 3)];
                     case 2:
                         hashPassword = _a.sent();
-                        return [4 /*yield*/, user_model_1.UserModel.create({ email: email, password: hashPassword })];
+                        return [4 /*yield*/, userDB_1.userDB.addUser(email, hashPassword)];
                     case 3:
                         newUser = _a.sent();
-                        tokens = serviceToken_1.ServiceToken.generateToken({ userId: newUser._id });
-                        return [4 /*yield*/, serviceToken_1.ServiceToken.saveToken(newUser._id, tokens.refreshToken)];
+                        tokens = tokenDB_1.tokenDB.generateToken({ userId: newUser.id });
+                        return [4 /*yield*/, tokenDB_1.tokenDB.saveToken(newUser.id, tokens.refreshToken)];
                     case 4:
                         _a.sent();
                         return [2 /*return*/, tokens];
@@ -163,4 +138,4 @@ var UserService = /** @class */ (function () {
     };
     return UserService;
 }());
-exports.ServiceUser = new UserService();
+exports.serviceUser = new UserService();

@@ -1,7 +1,7 @@
 import { Response, Request } from 'express';
 import { validationResult } from 'express-validator';
 
-import { ServiceUser } from '../service/serviceUser';
+import { serviceUser } from '../service/serviceUser';
 
 class UserController {
   async login(req: Request, res: Response, next) {
@@ -13,7 +13,7 @@ class UserController {
       }
       const { email, password } = req.body;
 
-      const user = await ServiceUser.login(email, password);
+      const user = await serviceUser.login(email, password);
 
       res.cookie('refreshToken', user.refreshToken, {
         httpOnly: true,
@@ -25,11 +25,12 @@ class UserController {
       return next(error);
     }
   }
+
   async logout(req: Request, res: Response, next) {
     try {
       const { refreshToken } = req.cookies;
 
-      const payload = await ServiceUser.logout(refreshToken);
+      const payload = await serviceUser.logout(refreshToken);
 
       res.clearCookie('refreshToken');
 
@@ -45,7 +46,7 @@ class UserController {
 
       res.clearCookie('refreshToken');
 
-      const user = await ServiceUser.refresh(refreshToken);
+      const user = await serviceUser.refresh(refreshToken);
 
       res.cookie('refreshToken', user.refreshToken, {
         httpOnly: true,
@@ -67,7 +68,7 @@ class UserController {
       }
       const { email, password } = req.body;
 
-      const user = await ServiceUser.registration(email, password);
+      const user = await serviceUser.registration(email, password);
 
       res.cookie('refreshToken', user.refreshToken, {
         httpOnly: true,
