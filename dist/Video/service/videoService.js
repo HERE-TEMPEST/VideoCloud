@@ -106,10 +106,11 @@ var VideoService = /** @class */ (function () {
     };
     VideoService.prototype.upload = function (userId, file) {
         return __awaiter(this, void 0, void 0, function () {
-            var inData, newVideo, users, usersId, newShare;
+            var inData, newVideo, users, usersId, newShare, error_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
+                        _a.trys.push([0, 6, , 7]);
                         inData = {
                             name: file.originalname,
                             path: file.path,
@@ -140,6 +141,11 @@ var VideoService = /** @class */ (function () {
                         _a.sent();
                         throw new Error('error in upload');
                     case 5: return [2 /*return*/, newVideo];
+                    case 6:
+                        error_1 = _a.sent();
+                        fs_1.default.rmSync(file.path);
+                        throw error_1;
+                    case 7: return [2 /*return*/];
                 }
             });
         });

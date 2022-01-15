@@ -15,15 +15,13 @@ class VideoDB {
         return null;
       }
 
-      const newVideo = new VideoModel({
+      const newVideo = await VideoModel.create({
         name,
         path,
         systemname,
         type,
         userId,
       });
-
-      await newVideo.save();
 
       const outputDate: OutVideo = {
         created: newVideo.createdAt,
@@ -35,6 +33,8 @@ class VideoDB {
         userId,
         videoId: newVideo._id,
       };
+
+      console.log('newVideo: ', newVideo);
 
       return outputDate;
     } catch (error) {

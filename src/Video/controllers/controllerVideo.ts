@@ -53,8 +53,6 @@ class ControllerVideo {
 
       return res.status(200).json(uploadVideo);
     } catch (error) {
-      console.log('error: ', error);
-
       return next(error);
     }
   }

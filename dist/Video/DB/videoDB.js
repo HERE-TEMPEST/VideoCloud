@@ -54,16 +54,15 @@ var VideoDB = /** @class */ (function () {
                         if (isVideo) {
                             return [2 /*return*/, null];
                         }
-                        newVideo = new schemaVideo_1.VideoModel({
-                            name: name_1,
-                            path: path,
-                            systemname: systemname,
-                            type: type,
-                            userId: userId,
-                        });
-                        return [4 /*yield*/, newVideo.save()];
+                        return [4 /*yield*/, schemaVideo_1.VideoModel.create({
+                                name: name_1,
+                                path: path,
+                                systemname: systemname,
+                                type: type,
+                                userId: userId,
+                            })];
                     case 2:
-                        _a.sent();
+                        newVideo = _a.sent();
                         outputDate = {
                             created: newVideo.createdAt,
                             name: newVideo.name,
@@ -74,6 +73,7 @@ var VideoDB = /** @class */ (function () {
                             userId: userId,
                             videoId: newVideo._id,
                         };
+                        console.log('newVideo: ', newVideo);
                         return [2 /*return*/, outputDate];
                     case 3:
                         error_1 = _a.sent();

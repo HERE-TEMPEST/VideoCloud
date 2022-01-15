@@ -115,7 +115,6 @@ var ControllerVideo = /** @class */ (function () {
                         return [2 /*return*/, res.status(200).json(uploadVideo)];
                     case 2:
                         error_4 = _a.sent();
-                        console.log('error: ', error_4);
                         return [2 /*return*/, next(error_4)];
                     case 3: return [2 /*return*/];
                 }

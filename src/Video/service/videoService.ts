@@ -56,39 +56,45 @@ class VideoService {
   }
 
   async upload(userId: Types.ObjectId, file: Express.Multer.File): Promise<OutVideo> {
-    const inData: InVideo = {
-      name: file.originalname,
-      path: file.path,
-      systemname: file.filename,
-      type: extname(file.originalname),
-    };
+    try {
+      const inData: InVideo = {
+        name: file.originalname,
+        path: file.path,
+        systemname: file.filename,
+        type: extname(file.originalname),
+      };
 
-    const newVideo = await videoDB.addVideo(userId, inData);
+      const newVideo = await videoDB.addVideo(userId, inData);
 
-    if (!newVideo) {
-      throw new MyError('video exist in user', 404);
-    }
-
-    const users = await userDB.getAllUsers();
-
-    // users
-    const usersId: Array<Types.ObjectId> = users.reduce((prev, element) => {
-      if (!element.id.equals(userId)) {
-        prev.push(element.id);
+      if (!newVideo) {
+        throw new MyError('video exist in user', 404);
       }
 
-      return prev;
-    }, Array<Types.ObjectId>());
+      const users = await userDB.getAllUsers();
 
-    const newShare = await shareDB.addShare(userId, newVideo.videoId, usersId);
+      // users
+      const usersId: Array<Types.ObjectId> = users.reduce((prev, element) => {
+        if (!element.id.equals(userId)) {
+          prev.push(element.id);
+        }
 
-    if (!newShare) {
-      await videoDB.delVideo(newVideo.userId, newVideo.videoId);
+        return prev;
+      }, Array<Types.ObjectId>());
 
-      throw new Error('error in upload');
+      const newShare = await shareDB.addShare(userId, newVideo.videoId, usersId);
+
+      if (!newShare) {
+        await videoDB.delVideo(newVideo.userId, newVideo.videoId);
+
+        throw new Error('error in upload');
+      }
+
+      return newVideo;
+    } catch (error) {
+      fs.rmSync(file.path);
+
+      throw error;
     }
-
-    return newVideo;
   }
 
   async uservideo(Id: Types.ObjectId, userId: Types.ObjectId, videoId: Types.ObjectId): Promise<OutVideo> {
