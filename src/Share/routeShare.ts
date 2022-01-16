@@ -6,7 +6,7 @@ import { getVideoId } from './middleWare';
 
 export const routeShare = Router();
 
-routeShare.put('/access/:videoId', getVideoId, shareController.access); //+
-routeShare.put('/accessAll/:videoId', getVideoId, shareController.accessAll); //+
-routeShare.put('/ban/:videoId', getVideoId, shareController.ban); //+
-routeShare.put('/banAll/:videoId', getVideoId, shareController.banAll); //+
+routeShare.put('/access/:videoId', getVideoId, shareController.access);
+routeShare.put('/accessAll/:videoId', getVideoId, shareController.accessAll);
+routeShare.put('/ban/:videoId', getVideoId, shareController.ban);
+routeShare.put('/banAll/:videoId', getVideoId, shareController.banAll);

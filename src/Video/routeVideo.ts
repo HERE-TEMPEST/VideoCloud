@@ -8,10 +8,10 @@ import { getVideoId, getUserIdAndVideoId, getUserId } from './middleWare';
 
 export const routeVideo = Router();
 
-routeVideo.delete('/:videoId', getVideoId, videoController.delete); //+
-routeVideo.get('/:videoId', getVideoId, videoController.download); //+
-routeVideo.get('/', videoController.videos); //+
-routeVideo.get('/users/:userId/:videoId', getUserIdAndVideoId, videoController.uservideo); //+
-routeVideo.get('/users/:userId/', getUserId, videoController.uservideos); //+
-routeVideo.post('/', upload.single('video'), videoController.upload); //+-delVideo kogda error
-routeVideo.put('/:videoId', getVideoId, videoController.update); //+
+routeVideo.delete('/:videoId', getVideoId, videoController.delete);
+routeVideo.get('/:videoId', getVideoId, videoController.download);
+routeVideo.get('/', videoController.videos);
+routeVideo.get('/users/:userId/:videoId', getUserIdAndVideoId, videoController.uservideo);
+routeVideo.get('/users/:userId/', getUserId, videoController.uservideos);
+routeVideo.post('/', upload.single('video'), videoController.upload);
+routeVideo.put('/:videoId', getVideoId, videoController.update);
