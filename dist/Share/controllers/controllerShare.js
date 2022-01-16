@@ -36,6 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.shareController = void 0;
 var mongoose_1 = require("mongoose");
 var shareService_1 = require("../service/shareService");
 var controllerShare = /** @class */ (function () {
@@ -52,14 +53,12 @@ var controllerShare = /** @class */ (function () {
                         usersId = usersId.map(function (element) {
                             return new mongoose_1.Types.ObjectId(element);
                         });
-                        console.log(usersId);
                         return [4 /*yield*/, shareService_1.shareService.access(usersId, req.share.videoId)];
                     case 1:
                         share = _a.sent();
                         return [2 /*return*/, res.status(200).json(share)];
                     case 2:
                         error_1 = _a.sent();
-                        console.log('error', error_1);
                         return [2 /*return*/, next(error_1)];
                     case 3: return [2 /*return*/];
                 }
@@ -79,7 +78,6 @@ var controllerShare = /** @class */ (function () {
                         return [2 /*return*/, res.status(200).json(share)];
                     case 2:
                         error_2 = _a.sent();
-                        console.log('error', error_2);
                         return [2 /*return*/, next(error_2)];
                     case 3: return [2 /*return*/];
                 }
@@ -100,7 +98,6 @@ var controllerShare = /** @class */ (function () {
                         return [2 /*return*/, res.status(200).json(share)];
                     case 2:
                         error_3 = _a.sent();
-                        console.log('error', error_3);
                         return [2 /*return*/, next(error_3)];
                     case 3: return [2 /*return*/];
                 }
@@ -120,7 +117,6 @@ var controllerShare = /** @class */ (function () {
                         return [2 /*return*/, res.status(200).json(share)];
                     case 2:
                         error_4 = _a.sent();
-                        console.log('error', error_4);
                         return [2 /*return*/, next(error_4)];
                     case 3: return [2 /*return*/];
                 }

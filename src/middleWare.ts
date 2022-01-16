@@ -15,7 +15,7 @@ export function tokenVerify(req: CustomRequest, res: Response, next) {
   const payload = tokenDB.validateAccessToken(token);
 
   if (!payload) {
-    return next(new MyError("this token isn't valid", 401));
+    return next(new MyError("token isn't valid", 401));
   }
   req.user = { userId: payload.userId };
 

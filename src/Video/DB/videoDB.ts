@@ -34,8 +34,6 @@ class VideoDB {
         videoId: newVideo._id,
       };
 
-      console.log('newVideo: ', newVideo);
-
       return outputDate;
     } catch (error) {
       return null;
@@ -127,11 +125,7 @@ class VideoDB {
 
   async getVideo(userId: Types.ObjectId, videoId: Types.ObjectId): Promise<OutVideo> {
     try {
-      console.log('videoId: ', videoId);
-
       const isVideo = await VideoModel.findOne({ _id: videoId, userId });
-
-      console.log('isVideo: ', isVideo);
 
       if (!isVideo) {
         return null;

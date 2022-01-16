@@ -36,6 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.videoController = void 0;
 var videoService_1 = require("../service/videoService");
 var ControllerVideo = /** @class */ (function () {
     function ControllerVideo() {
@@ -53,7 +54,6 @@ var ControllerVideo = /** @class */ (function () {
                         return [2 /*return*/, res.status(200).json(delVideo)];
                     case 2:
                         error_1 = _a.sent();
-                        console.log('error: ', error_1.message);
                         return [2 /*return*/, next(error_1)];
                     case 3: return [2 /*return*/];
                 }
@@ -67,14 +67,12 @@ var ControllerVideo = /** @class */ (function () {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 2, , 3]);
-                        console.log('download:', req.video);
                         return [4 /*yield*/, videoService_1.videoService.download(req.user.userId, req.video.videoId)];
                     case 1:
                         streamVideo = _a.sent();
                         return [2 /*return*/, streamVideo.pipe(res)];
                     case 2:
                         error_2 = _a.sent();
-                        console.log('error: ', error_2);
                         return [2 /*return*/, next(error_2)];
                     case 3: return [2 /*return*/];
                 }
@@ -95,7 +93,6 @@ var ControllerVideo = /** @class */ (function () {
                         return [2 /*return*/, res.status(200).json(updateVideo)];
                     case 2:
                         error_3 = _a.sent();
-                        console.log('error: ', error_3);
                         return [2 /*return*/, next(error_3)];
                     case 3: return [2 /*return*/];
                 }
@@ -135,7 +132,6 @@ var ControllerVideo = /** @class */ (function () {
                         return [2 /*return*/, res.status(200).json(userVideo)];
                     case 2:
                         error_5 = _b.sent();
-                        console.log('error: ', error_5);
                         return [2 /*return*/, next(error_5)];
                     case 3: return [2 /*return*/];
                 }
@@ -155,7 +151,6 @@ var ControllerVideo = /** @class */ (function () {
                         return [2 /*return*/, res.status(200).json(userVideos)];
                     case 2:
                         error_6 = _a.sent();
-                        console.log('error: ', error_6);
                         return [2 /*return*/, next(error_6)];
                     case 3: return [2 /*return*/];
                 }
@@ -175,7 +170,6 @@ var ControllerVideo = /** @class */ (function () {
                         return [2 /*return*/, res.status(200).json(userVideos)];
                     case 2:
                         error_7 = _a.sent();
-                        console.log('error: ', error_7);
                         return [2 /*return*/, next(error_7)];
                     case 3: return [2 /*return*/];
                 }

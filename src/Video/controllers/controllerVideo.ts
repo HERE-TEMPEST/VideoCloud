@@ -13,22 +13,16 @@ class ControllerVideo {
 
       return res.status(200).json(delVideo);
     } catch (error) {
-      console.log('error: ', error.message);
-
       return next(error);
     }
   }
 
   async download(req: CustomRequest, res: Response, next) {
     try {
-      console.log('download:', req.video);
-
       const streamVideo = await videoService.download(req.user.userId, req.video.videoId);
 
       return streamVideo.pipe(res);
     } catch (error) {
-      console.log('error: ', error);
-
       return next(error);
     }
   }
@@ -41,8 +35,6 @@ class ControllerVideo {
 
       return res.status(200).json(updateVideo);
     } catch (error) {
-      console.log('error: ', error);
-
       return next(error);
     }
   }
@@ -65,8 +57,6 @@ class ControllerVideo {
 
       return res.status(200).json(userVideo);
     } catch (error) {
-      console.log('error: ', error);
-
       return next(error);
     }
   }
@@ -77,8 +67,6 @@ class ControllerVideo {
 
       return res.status(200).json(userVideos);
     } catch (error) {
-      console.log('error: ', error);
-
       return next(error);
     }
   }
@@ -89,8 +77,6 @@ class ControllerVideo {
 
       return res.status(200).json(userVideos);
     } catch (error) {
-      console.log('error: ', error);
-
       return next(error);
     }
   }

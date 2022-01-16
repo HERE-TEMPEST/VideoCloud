@@ -1,2 +1,5 @@
 .env
-
+.eslintrc
+.prettierrc
+app.log
+./dist

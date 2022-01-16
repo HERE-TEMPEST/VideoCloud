@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.VideoModel = void 0;
 var mongoose_1 = require("mongoose");
 var SchemaVideo = new mongoose_1.Schema({
     name: { required: true, type: String },
@@ -8,4 +9,4 @@ var SchemaVideo = new mongoose_1.Schema({
     type: { required: true, type: String },
     userId: { required: true, type: mongoose_1.Types.ObjectId },
 }, { timestamps: true });
-exports.VideoModel = mongoose_1.model('Video', SchemaVideo);
+exports.VideoModel = (0, mongoose_1.model)('Video', SchemaVideo);

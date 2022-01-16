@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.getVideoId = void 0;
 var mongoose_1 = require("mongoose");
 function getVideoId(req, res, next) {
     var videoId = req.params.videoId;

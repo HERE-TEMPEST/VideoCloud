@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.ShareModel = void 0;
 var mongoose_1 = require("mongoose");
 var ShareSchema = new mongoose_1.Schema({
     ban: { required: true, type: Array() },
@@ -13,6 +14,6 @@ interface IShareSchema {
   videoId: Types.ObjectId;
 }
 */
-exports.ShareModel = mongoose_1.model('Share', ShareSchema);
+exports.ShareModel = (0, mongoose_1.model)('Share', ShareSchema);
 //: Model<ShareDocument>
 //export type ShareDocument = Document & IShareSchema;

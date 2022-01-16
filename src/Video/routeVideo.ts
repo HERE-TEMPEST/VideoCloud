@@ -15,14 +15,3 @@ routeVideo.get('/users/:userId/:videoId', getUserIdAndVideoId, videoController.u
 routeVideo.get('/users/:userId/', getUserId, videoController.uservideos); //+
 routeVideo.post('/', upload.single('video'), videoController.upload); //+-delVideo kogda error
 routeVideo.put('/:videoId', getVideoId, videoController.update); //+
-
-routeVideo.use((error, req, res, next) => {
-  const status = error.status || 500;
-  const message = error.message;
-
-  res.status(status);
-  res.json({
-    message,
-    status,
-  });
-});

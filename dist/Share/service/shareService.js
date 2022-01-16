@@ -36,6 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.shareService = void 0;
 var Error_1 = require("../../Error");
 var userDB_1 = require("../../User/DB/userDB");
 var shareDB_1 = require("../DB/shareDB");

@@ -36,6 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.serviceUser = void 0;
 var bcrypt_1 = require("bcrypt");
 var Error_1 = require("../../Error");
 var tokenDB_1 = require("../DB/tokenDB");
@@ -73,7 +74,7 @@ var UserService = /** @class */ (function () {
                         if (!isUser) {
                             throw new Error_1.MyError('login or password uncorrectly', 401);
                         }
-                        return [4 /*yield*/, bcrypt_1.compare(password, isUser.password)];
+                        return [4 /*yield*/, (0, bcrypt_1.compare)(password, isUser.password)];
                     case 2:
                         isPassewCompare = _a.sent();
                         if (!isPassewCompare) {
@@ -140,7 +141,7 @@ var UserService = /** @class */ (function () {
                         if (isUser) {
                             throw new Error_1.MyError('this user exist in system...', 401);
                         }
-                        return [4 /*yield*/, bcrypt_1.hash(password, 3)];
+                        return [4 /*yield*/, (0, bcrypt_1.hash)(password, 3)];
                     case 2:
                         hashPassword = _a.sent();
                         return [4 /*yield*/, userDB_1.userDB.addUser(email, hashPassword)];

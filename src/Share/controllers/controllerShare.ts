@@ -13,14 +13,10 @@ class controllerShare {
         return new Types.ObjectId(element);
       });
 
-      console.log(usersId);
-
       const share = await shareService.access(usersId, req.share.videoId);
 
       return res.status(200).json(share);
     } catch (error) {
-      console.log('error', error);
-
       return next(error);
     }
   }
@@ -31,8 +27,6 @@ class controllerShare {
 
       return res.status(200).json(share);
     } catch (error) {
-      console.log('error', error);
-
       return next(error);
     }
   }
@@ -45,8 +39,6 @@ class controllerShare {
 
       return res.status(200).json(share);
     } catch (error) {
-      console.log('error', error);
-
       return next(error);
     }
   }
@@ -57,8 +49,6 @@ class controllerShare {
 
       return res.status(200).json(share);
     } catch (error) {
-      console.log('error', error);
-
       return next(error);
     }
   }

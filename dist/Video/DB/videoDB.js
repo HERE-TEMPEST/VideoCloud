@@ -36,6 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.videoDB = void 0;
 var schemaVideo_1 = require("../models/schemaVideo");
 var VideoDB = /** @class */ (function () {
     function VideoDB() {
@@ -73,7 +74,6 @@ var VideoDB = /** @class */ (function () {
                             userId: userId,
                             videoId: newVideo._id,
                         };
-                        console.log('newVideo: ', newVideo);
                         return [2 /*return*/, outputDate];
                     case 3:
                         error_1 = _a.sent();
@@ -193,11 +193,9 @@ var VideoDB = /** @class */ (function () {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 2, , 3]);
-                        console.log('videoId: ', videoId);
                         return [4 /*yield*/, schemaVideo_1.VideoModel.findOne({ _id: videoId, userId: userId })];
                     case 1:
                         isVideo = _a.sent();
-                        console.log('isVideo: ', isVideo);
                         if (!isVideo) {
                             return [2 /*return*/, null];
                         }

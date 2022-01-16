@@ -36,6 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.tokenDB = void 0;
 var jsonwebtoken_1 = require("jsonwebtoken");
 var index_1 = require("../../index");
 var token_model_1 = require("../models/token-model");
@@ -69,8 +70,8 @@ var TokenDB = /** @class */ (function () {
     };
     TokenDB.prototype.generateToken = function (payload) {
         try {
-            var accessToken = jsonwebtoken_1.sign(payload, index_1.secretValue.SECRET_KEY_ACCESS, { expiresIn: '180m' });
-            var refreshToken = jsonwebtoken_1.sign(payload, index_1.secretValue.SECRET_KEY_REFRESH, { expiresIn: '30d' });
+            var accessToken = (0, jsonwebtoken_1.sign)(payload, index_1.secretValue.SECRET_KEY_ACCESS, { expiresIn: '180m' });
+            var refreshToken = (0, jsonwebtoken_1.sign)(payload, index_1.secretValue.SECRET_KEY_REFRESH, { expiresIn: '30d' });
             return {
                 accessToken: accessToken,
                 refreshToken: refreshToken,
@@ -137,7 +138,7 @@ var TokenDB = /** @class */ (function () {
     };
     TokenDB.prototype.validateAccessToken = function (accessToken) {
         try {
-            var payload = jsonwebtoken_1.verify(accessToken, index_1.secretValue.SECRET_KEY_ACCESS);
+            var payload = (0, jsonwebtoken_1.verify)(accessToken, index_1.secretValue.SECRET_KEY_ACCESS);
             return payload;
         }
         catch (error) {
@@ -146,7 +147,7 @@ var TokenDB = /** @class */ (function () {
     };
     TokenDB.prototype.validateRefreshToken = function (refreshToken) {
         try {
-            var payload = jsonwebtoken_1.verify(refreshToken, index_1.secretValue.SECRET_KEY_REFRESH);
+            var payload = (0, jsonwebtoken_1.verify)(refreshToken, index_1.secretValue.SECRET_KEY_REFRESH);
             return payload;
         }
         catch (error) {

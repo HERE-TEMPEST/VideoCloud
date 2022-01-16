@@ -36,6 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.AuthController = void 0;
 var express_validator_1 = require("express-validator");
 var serviceUser_1 = require("../service/serviceUser");
 var UserController = /** @class */ (function () {
@@ -67,7 +68,7 @@ var UserController = /** @class */ (function () {
                 switch (_b.label) {
                     case 0:
                         _b.trys.push([0, 2, , 3]);
-                        errors = express_validator_1.validationResult(req);
+                        errors = (0, express_validator_1.validationResult)(req);
                         if (!errors.isEmpty()) {
                             throw errors;
                         }
@@ -141,7 +142,7 @@ var UserController = /** @class */ (function () {
                 switch (_b.label) {
                     case 0:
                         _b.trys.push([0, 2, , 3]);
-                        errors = express_validator_1.validationResult(req);
+                        errors = (0, express_validator_1.validationResult)(req);
                         if (!errors.isEmpty()) {
                             throw errors;
                         }

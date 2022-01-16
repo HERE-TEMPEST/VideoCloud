@@ -27,14 +27,3 @@ routerAuth.post(
 routerAuth.post('/logout', AuthController.logout);
 routerAuth.get('/refresh', AuthController.refresh);
 routerAuth.get('/all', tokenVerify, AuthController.getAllUsers);
-
-routerAuth.use((error, req, res, next) => {
-  const status = error.status || 500;
-  const message = error.message;
-
-  res.status(status);
-  res.json({
-    message,
-    status,
-  });
-});

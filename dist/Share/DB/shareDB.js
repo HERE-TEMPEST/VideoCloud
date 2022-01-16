@@ -36,6 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.shareDB = void 0;
 var share_model_1 = require("../models/share-model");
 var ShareDB = /** @class */ (function () {
     function ShareDB() {
@@ -70,7 +71,6 @@ var ShareDB = /** @class */ (function () {
                         return [2 /*return*/, outData];
                     case 3:
                         error_1 = _a.sent();
-                        console.log('error', error_1);
                         return [2 /*return*/, null];
                     case 4: return [2 /*return*/];
                 }
@@ -107,7 +107,6 @@ var ShareDB = /** @class */ (function () {
                         return [2 /*return*/, outData];
                     case 3:
                         error_2 = _a.sent();
-                        console.log('error', error_2);
                         return [2 /*return*/, null];
                     case 4: return [2 /*return*/];
                 }
@@ -153,7 +152,6 @@ var ShareDB = /** @class */ (function () {
                         return [2 /*return*/, !isUser];
                     case 2:
                         error_3 = _a.sent();
-                        console.log('error', error_3);
                         return [2 /*return*/, false];
                     case 3: return [2 /*return*/];
                 }
@@ -181,7 +179,6 @@ var ShareDB = /** @class */ (function () {
                         return [2 /*return*/, outData];
                     case 2:
                         error_4 = _a.sent();
-                        console.log('error', error_4);
                         return [2 /*return*/, null];
                     case 3: return [2 /*return*/];
                 }

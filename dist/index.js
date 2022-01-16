@@ -39,17 +39,19 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.secretValue = void 0;
 var cookie_parser_1 = __importDefault(require("cookie-parser"));
 var cors_1 = __importDefault(require("cors"));
 var dotenv_1 = require("dotenv");
 var express_1 = __importDefault(require("express"));
 var mongoose_1 = __importDefault(require("mongoose"));
+var loggger_1 = require("./loggger");
 var middleWare_1 = require("./middleWare");
 var routeShare_1 = require("./Share/routeShare");
 var routeAuth_1 = require("./User/routeAuth");
 var routeVideo_1 = require("./Video/routeVideo");
-var app = express_1.default();
-dotenv_1.config();
+var app = (0, express_1.default)();
+(0, dotenv_1.config)();
 exports.secretValue = {
     DB_URL: process.env.DB_URL,
     PORT: parseInt(process.env.PORT),
@@ -57,11 +59,22 @@ exports.secretValue = {
     SECRET_KEY_REFRESH: process.env.SECRET_KEY_REFRESH,
 };
 app.use(express_1.default.json());
-app.use(cors_1.default());
-app.use(cookie_parser_1.default());
+app.use((0, cors_1.default)());
+app.use((0, cookie_parser_1.default)());
 app.use('/user', routeAuth_1.routerAuth);
 app.use('/video', middleWare_1.tokenVerify, routeVideo_1.routeVideo);
 app.use('/share', middleWare_1.tokenVerify, routeShare_1.routeShare);
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+app.use(function (error, req, res, next) {
+    var status = error.status || 500;
+    var message = error.message;
+    res.status(status);
+    res.json({
+        message: message,
+        status: status,
+    });
+    loggger_1.logger.error(message);
+});
 function createServer() {
     return __awaiter(this, void 0, void 0, function () {
         var error_1;
@@ -78,7 +91,7 @@ function createServer() {
                     return [3 /*break*/, 3];
                 case 2:
                     error_1 = _a.sent();
-                    console.log(error_1);
+                    loggger_1.logger.error(error_1);
                     return [3 /*break*/, 3];
                 case 3: return [2 /*return*/];
             }

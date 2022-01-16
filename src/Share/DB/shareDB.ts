@@ -34,8 +34,6 @@ class ShareDB {
 
       return outData;
     } catch (error) {
-      console.log('error', error);
-
       return null;
     }
   }
@@ -66,8 +64,6 @@ class ShareDB {
 
       return outData;
     } catch (error) {
-      console.log('error', error);
-
       return null;
     }
   }
@@ -100,8 +96,6 @@ class ShareDB {
 
       return !isUser;
     } catch (error) {
-      console.log('error', error);
-
       return false;
     }
   }
@@ -121,8 +115,6 @@ class ShareDB {
 
       return outData;
     } catch (error) {
-      console.log('error', error);
-
       return null;
     }
   }

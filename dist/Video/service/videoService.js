@@ -39,6 +39,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.videoService = void 0;
 var fs_1 = __importDefault(require("fs"));
 var posix_1 = require("path/posix");
 var Error_1 = require("../../Error");
@@ -115,7 +116,7 @@ var VideoService = /** @class */ (function () {
                             name: file.originalname,
                             path: file.path,
                             systemname: file.filename,
-                            type: posix_1.extname(file.originalname),
+                            type: (0, posix_1.extname)(file.originalname),
                         };
                         return [4 /*yield*/, videoDB_1.videoDB.addVideo(userId, inData)];
                     case 1:
