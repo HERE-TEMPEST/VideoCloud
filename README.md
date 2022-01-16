@@ -15,11 +15,11 @@
 **Маршрутизация**
 1. user/.... - регистрация/авторизация\
   Запросы которые были реализованы:
-  1. /registration
-  2. /login
-  3. /logout
-  4. /refresh
-  5. /all\
+  + /registration
+  + /login
+  + /logout
+  + /refresh
+  + /all\
   Использованные схемы:
  + **User:**
       ```ts
