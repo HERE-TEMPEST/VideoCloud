@@ -15,15 +15,15 @@
 **Маршрутизация**
 1. user/.... - регистрация/авторизация
   **Использованные схемы**:
-  1. **User:**
+ + **User:**
       ```ts
         email: { required: true, type: String, unique: true },
         password: { required: true, type: String },
       ```
-  2. **Token:**
+ + **Token:**
     ```ts
-       refreshToken: { required: true, type: String }
-       userId: { required: true, type: Types.ObjectId }
+      refreshToken: { required: true, type: String }
+      userId: { required: true, type: Types.ObjectId }
     ```
 3. video/.... - CRUD видео.
 4. share/.... - работы с "шарингом" видео.
