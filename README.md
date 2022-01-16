@@ -17,8 +17,8 @@
   **Использованные схемы**:
  + **User:**
       ```ts
-        email: { required: true, type: String, unique: true },
-        password: { required: true, type: String },
+        email: { required: true, type: String, unique: true }
+        password: { required: true, type: String }
       ```
  + **Token:**
     ```ts
@@ -26,4 +26,20 @@
       userId: { required: true, type: Types.ObjectId }
     ```
 3. video/.... - CRUD видео.
-4. share/.... - работы с "шарингом" видео.
+  **Использованные схемы**:
+ + **Video:**
+      ```ts
+      name: { required: true, type: String }
+      path: { required: true, type: String }
+      systemname: { required: true, type: String, unique: true }
+      type: { required: true, type: String }
+      userId: { required: true, type: Types.ObjectId }
+      ```
+5. share/.... - работы с "шарингом" видео.
+   **Использованные схемы**:
+ + **Share:**
+      ```ts
+      ban: { required: true, type: Array<Types.ObjectId>() }
+      userId: { required: true, type: Types.ObjectId }
+      videoId: { required: true, type: Types.ObjectId }
+      ```
