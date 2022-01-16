@@ -13,8 +13,8 @@
 Стартовым файлом являеться index.ts в папке src.
 
 **Маршрутизация**
-1. user/.... - регистрация/авторизация
-  **Использованные схемы**:
+1. user/.... - регистрация/авторизация\
+  Использованные схемы:
  + **User:**
       ```ts
         email: { required: true, type: String, unique: true }
@@ -25,8 +25,8 @@
       refreshToken: { required: true, type: String }
       userId: { required: true, type: Types.ObjectId }
     ```
-3. video/.... - CRUD видео.
-  **Использованные схемы**:
+3. video/.... - CRUD видео.\
+  Использованные схемы
  + **Video:**
       ```ts
       name: { required: true, type: String }
@@ -35,8 +35,8 @@
       type: { required: true, type: String }
       userId: { required: true, type: Types.ObjectId }
       ```
-5. share/.... - работы с "шарингом" видео.
-   **Использованные схемы**:
+5. share/.... - работы с "шарингом" видео.\
+   Использованные схемы
  + **Share:**
       ```ts
       ban: { required: true, type: Array<Types.ObjectId>() }
