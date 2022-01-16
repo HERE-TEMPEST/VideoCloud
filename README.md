@@ -50,7 +50,7 @@
       userId: { required: true, type: Types.ObjectId }
       ```
 3. share/.... - работы с "шарингом" видео.\
-4.   Запросы, которые были реализованы:
+  Запросы, которые были реализованы:
   + /access/:videoId - разрешить доступ к видео(put-запрос, videoId - query-параметр) 
   + /accessAll/:videoId - разрешить доступ к видео всем пользователям(put-запрос, videoId - query-параметр)
   + /ban/:videoId - запретить доступ к видео(put-запрос, videoId - query-параметр) 
