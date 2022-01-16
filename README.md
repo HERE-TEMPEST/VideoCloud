@@ -14,6 +14,12 @@
 
 **Маршрутизация**
 1. user/.... - регистрация/авторизация\
+  Запросы которые были реализованы:
+  1. /registration
+  2. /login
+  3. /logout
+  4. /refresh
+  5. /all\
   Использованные схемы:
  + **User:**
       ```ts
@@ -26,7 +32,7 @@
       userId: { required: true, type: Types.ObjectId }
     ```
 3. video/.... - CRUD видео.\
-  Использованные схемы
+  Использованные схемы:
  + **Video:**
       ```ts
       name: { required: true, type: String }
@@ -36,10 +42,11 @@
       userId: { required: true, type: Types.ObjectId }
       ```
 5. share/.... - работы с "шарингом" видео.\
-   Использованные схемы
+   Использованные схемы:
  + **Share:**
       ```ts
       ban: { required: true, type: Array<Types.ObjectId>() }
       userId: { required: true, type: Types.ObjectId }
       videoId: { required: true, type: Types.ObjectId }
       ```
+
