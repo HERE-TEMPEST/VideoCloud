@@ -15,11 +15,11 @@
 **Маршрутизация**
 1. user/.... - регистрация/авторизация\
   Запросы которые были реализованы:
-  + /registration
-  + /login
-  + /logout
-  + /refresh
-  + /all\
+  + /registration - добавление нового пользователя( post-запрос)
+  + /login - авторизация пользователя( post-запрос)
+  + /logout - выход из приложения( post-запрос)
+  + /refresh - обновление access token( get-запрос)
+  + /all - получение всех пользователей( get-запрос)\
   Использованные схемы:
  + **User:**
       ```ts
@@ -31,7 +31,15 @@
       refreshToken: { required: true, type: String }
       userId: { required: true, type: Types.ObjectId }
     ```
-3. video/.... - CRUD видео.\
+2. video/.... - CRUD видео.\
+  Запросы которые были реализованы:
+  + /:videoId - удаление видео по его ID( delete-запрос, videoId - query-параметр) 
+  + /:videoId - скачать видео по его ID( get-запрос, videoId - query-параметр)
+  + / - получить все видео пользователя(get-запрос)
+  + /users/:userId/:videoId - получить видео данного пользователя по ID(get-запрос, videoId и userId - query-параметры)
+  + /users/:userId/ - получить видео другого пользователя по ID(get-запрос, videoId - query-параметр)
+  + / - загрузить на сервер видео(post-запрос)
+  + /:videoId - изменить название видео(put-запрос)
   Использованные схемы:
  + **Video:**
       ```ts
@@ -41,7 +49,7 @@
       type: { required: true, type: String }
       userId: { required: true, type: Types.ObjectId }
       ```
-5. share/.... - работы с "шарингом" видео.\
+3. share/.... - работы с "шарингом" видео.\
    Использованные схемы:
  + **Share:**
       ```ts
